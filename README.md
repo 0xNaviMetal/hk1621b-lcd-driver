@@ -48,6 +48,7 @@ struct SegPair {
     uint8_t n0; // First 4-bit nibble  (SEG x)
     uint8_t n1; // Second 4-bit nibble (SEG x+1)
 };
+```
 Reverse-Engineering the Bitmap
 Since the PCB traces do not follow a standard segment ordering, the display array was built through manual bit-mapping:
 
