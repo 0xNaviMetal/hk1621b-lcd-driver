@@ -1,15 +1,15 @@
 # HK1621B Custom LCD Driver & Reverse-Engineering Guide
-
+<img src="assets/3.jpg" width="400" alt=" ">
 A lightweight driver and bit-mapping guide for controlling custom segment LCDs powered by the **HK1621B** (or **HT1621B**) driver chip using an Arduino Nano via a 3-wire serial interface.
 
 ---
 
 ## 📌 Project Overview
-
+<img src="assets/2.jpg" width="400" alt=" ">
 This project focuses on reverse-engineering a custom-designed LCD module with **no datasheet or pinout reference available**. By interfacing an Arduino Nano with the onboard HK1621B chip, the microcontroller offloads the high display refresh load and controls segments directly through memory mapping.
 
 Because the original PCB designer routed the segment traces randomly across the board (e.g., Bit 1 is not Segment A, Bit 2 is not Segment B), every segment bit was manually identified and mapped through step-by-step debugging.
-
+<img src="assets/5.jpg" width="400" alt=" ">
 ---
 
 ## 🔌 Hardware Connections & Pinout
@@ -28,7 +28,7 @@ The LCD module uses a 5-pin main connector (`CON1`) alongside a dedicated ground
 
 ### 💡 Display Backlight Connection
 > ⚠️ **Important:** To turn on the display backlight, connect the dedicated pin located on the side/top edge of the PCB directly to **GND**.
-
+<img src="assets/1.jpg" width="400" alt=" ">
 ---
 
 ## 🧠 Why 4 Bits and Not 8 Bits?
@@ -40,7 +40,7 @@ The **HK1621B / HT1621B** memory architecture uses **4-bit RAM addresses**:
 3. **Nibble Pairing:** Because one RAM address only provides 4 bits, each digit on the display spans **2 RAM addresses** (4 bits + 4 bits = 8 bits).
 
 In the code, this is handled using a pair of 4-bit nibbles:
-
+<img src="assets/4.jpg" width="400" alt=" ">
 ```cpp
 // HK1621B RAM cells are 4 bits wide. 
 // n0 and n1 hold 4 bits each across 2 RAM addresses to drive 8 total segments.
@@ -49,6 +49,7 @@ struct SegPair {
     uint8_t n1; // Second 4-bit nibble (SEG x+1)
 };
 ```
+<img src="assets/6.jpg" width="400" alt=" ">
 Reverse-Engineering the Bitmap
 Since the PCB traces do not follow a standard segment ordering, the display array was built through manual bit-mapping:
 
